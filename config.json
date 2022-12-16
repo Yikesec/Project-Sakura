@@ -1,0 +1,18 @@
+{
+    "token": "OTA0MDk0MTUwMzczMjgxODEz.YX2jHg.RFrsGCfQ4EpIXEa7MMMe47X-H5I",
+    "password": "skidded666",
+    "prefix": "s",
+
+    "nitro_sniper": true, 
+    "giveaway_sniper": true,
+    "slotbot_sniper": true,
+    "privnote_sniper": true,
+
+    "stream_url": "https://twitch.tv/monke",
+    "tts_language": "en",
+
+    "bitly_key": "bitly-key-here",
+    "cat_key": "cat-key-here",
+    "weather_key": "weather-key-here",
+    "cuttly_key": "cuttly-key-here"
+}
