@@ -4315,10 +4315,42 @@ async def crash2(ctx):
     
 
 @Sakura.command()
-async def astolfodrip(ctx):
+async def helptest(ctx):
         await ctx.message.delete()
-        await ctx.send("https://cdn.discordapp.com/attachments/902363685350174760/903022925886652446/yFC3ZhcA_400x400.jpg")
+        await ctx.send("""```
+═════════•°• ⚠️ •°•═════════
+       Project Sakura
+═════════•°• ⚠️ •°•═════════
+            Help
+CMD     - "A list of general commands"
+GIFS    - "Kawaii and Lewd commands"
+AMC     - "Account management
+UTIL    - "Utility commands"
+FUN     - "Fun commands"
+HACKING - "Discord coding is shit"
+Nuking  - "For molesting servers"
 
+```""")
+ctx.send("""
+```
+く__,.ヘヽ.　　　　/　,ー､ 〉
+　　　　　＼ ', !-─‐-i　/　/´
+　　　 　 ／｀ｰ'　　　 L/／｀ヽ､
+　　 　 /　 ／,　 /|　 ,　 ,　　　 ',
+　　　ｲ 　/ /-‐/　ｉ　L_ ﾊ ヽ!　 i
+　　　 ﾚ ﾍ 7ｲ｀ﾄ　 ﾚ'ｧ-ﾄ､!ハ|　 |
+　　　　 !,/7 '0'　　 ´0iソ| 　      |　　　
+　　　　 |.从"　　_　　 ,,,, / |./ 　 |
+　　　　 ﾚ'| i＞.､,,__　_,.イ / 　.i 　|
+　　　　　 ﾚ'| | / k_７_/ﾚ'ヽ,　ﾊ.　|
+　　　　　　 | |/i 〈|/　 i　,.ﾍ |　i　|
+　　　　　　.|/ /　ｉ： 　 ﾍ!　　＼　|
+　　　 　 　 kヽ>､ﾊ 　 _,.ﾍ､ 　 /､!
+　　　　　　 !'〈//｀Ｔ´', ＼ ｀'7'ｰr'
+　　　　　　 ﾚ'ヽL__|___i,___,ンﾚ|ノ
+　　　　　 　　　ﾄ-,/　|___./
+　　　　　 　　　'ｰ'　　!_,.:
+```""")
 
 @Sakura.command()
 async def cringe(ctx):
