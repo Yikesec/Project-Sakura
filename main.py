@@ -839,20 +839,43 @@ async def botlogin(ctx, _token):
 
 @Sakura.command()
 async def help(ctx):
-    await ctx.message.delete()
-    embed = discord.Embed(color=0xffcaff)
-    embed.add_field(name="`Ｈｅｌｐ　（ヘルプ）`",value="Shows help commands",inline=False)
-    embed.add_field(name="`CMD`",value="A list of general commands",inline=False)
-    embed.add_field(name="`GIFS`",value="Kawaii and Lewd commands",inline=False)
-    embed.add_field(name="`AMC`",value="Account managment",inline=False)
-    embed.add_field(name="`UTIL`",value="Utility commands",inline=False)
-    embed.add_field(name="`FUN`",value="Fun commands",inline=False)
-    embed.add_field(name="`HACKING`",value="Discord coding is shit",inline=False)   
-    embed.add_field(name="`Nuking`",value="For molesting servers",inline=False)   
-    embed.set_image(url="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fs14.favim.com%2Forig%2F160403%2Fanime-girl-kawaii-japan-monochrome-Favim.com-4159549.png&f=1&nofb=1")
-    embed.set_footer(text="Sakura Selfbot")
-    embed.set_thumbnail(url="https://i.imgur.com/I4bHLQK.png")
-    await ctx.send(embed=em)
+        await ctx.message.delete()
+        await ctx.send("""```ansi
+═════════•°• ⚠️ •°•═════════       
+    [2;33m   Project Sakura[0m
+═════════•°• ⚠️ •°•═════════            
+            Help
+
+[2;35mCMD [0m    - "A list of general commands"
+[2;35m[2;35mGIFS    [0m[2;35m[0m- "Kawaii and Lewd commands"
+[2;35mAMC     [0m- "Account management
+[2;35mUTIL    [0m- "Utility commands"
+[2;35mFUN     [0m- "Fun commands"
+[2;35mHACKING[0m - "Discord coding is shit"
+[2;35mNUKING  [0m- "For molesting servers"
+```""")
+ctx.send("""
+```
+く__,.ヘヽ.　　　　/　,ー､ 〉
+　　　　　＼ ', !-─‐-i　/　/´
+　　　 　 ／｀ｰ'　　　 L/／｀ヽ､
+　　 　 /　 ／,　 /|　 ,　 ,　　　 ',
+　　　ｲ 　/ /-‐/　ｉ　L_ ﾊ ヽ!　 i
+　　　 ﾚ ﾍ 7ｲ｀ﾄ　 ﾚ'ｧ-ﾄ､!ハ|　 |
+　　　　 !,/7 '0'　　 ´0iソ| 　      |　　　
+　　　　 |.从"　　_　　 ,,,, / |./ 　 |
+　　　　 ﾚ'| i＞.､,,__　_,.イ / 　.i 　|
+　　　　　 ﾚ'| | / k_７_/ﾚ'ヽ,　ﾊ.　|
+　　　　　　 | |/i 〈|/　 i　,.ﾍ |　i　|
+　　　　　　.|/ /　ｉ： 　 ﾍ!　　＼　|
+　　　 　 　 kヽ>､ﾊ 　 _,.ﾍ､ 　 /､!
+　　　　　　 !'〈//｀Ｔ´', ＼ ｀'7'ｰr'
+　　　　　　 ﾚ'ヽL__|___i,___,ンﾚ|ノ
+　　　　　 　　　ﾄ-,/　|___./
+　　　　　 　　　'ｰ'　　!_,.:
+```""")
+
+
 @Sakura.command()
 async def cmd(ctx):
     await ctx.message.delete()
@@ -4314,43 +4337,7 @@ async def crash2(ctx):
         await ctx.send("When You Cant Breathe:")
     
 
-@Sakura.command()
-async def helptest(ctx):
-        await ctx.message.delete()
-        await ctx.send("""```
-═════════•°• ⚠️ •°•═════════
-       Project Sakura
-═════════•°• ⚠️ •°•═════════
-            Help
-CMD     - "A list of general commands"
-GIFS    - "Kawaii and Lewd commands"
-AMC     - "Account management
-UTIL    - "Utility commands"
-FUN     - "Fun commands"
-HACKING - "Discord coding is shit"
-Nuking  - "For molesting servers"
 
-```""")
-ctx.send("""
-```
-く__,.ヘヽ.　　　　/　,ー､ 〉
-　　　　　＼ ', !-─‐-i　/　/´
-　　　 　 ／｀ｰ'　　　 L/／｀ヽ､
-　　 　 /　 ／,　 /|　 ,　 ,　　　 ',
-　　　ｲ 　/ /-‐/　ｉ　L_ ﾊ ヽ!　 i
-　　　 ﾚ ﾍ 7ｲ｀ﾄ　 ﾚ'ｧ-ﾄ､!ハ|　 |
-　　　　 !,/7 '0'　　 ´0iソ| 　      |　　　
-　　　　 |.从"　　_　　 ,,,, / |./ 　 |
-　　　　 ﾚ'| i＞.､,,__　_,.イ / 　.i 　|
-　　　　　 ﾚ'| | / k_７_/ﾚ'ヽ,　ﾊ.　|
-　　　　　　 | |/i 〈|/　 i　,.ﾍ |　i　|
-　　　　　　.|/ /　ｉ： 　 ﾍ!　　＼　|
-　　　 　 　 kヽ>､ﾊ 　 _,.ﾍ､ 　 /､!
-　　　　　　 !'〈//｀Ｔ´', ＼ ｀'7'ｰr'
-　　　　　　 ﾚ'ヽL__|___i,___,ンﾚ|ノ
-　　　　　 　　　ﾄ-,/　|___./
-　　　　　 　　　'ｰ'　　!_,.:
-```""")
 
 @Sakura.command()
 async def cringe(ctx):
