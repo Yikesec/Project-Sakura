@@ -3,6 +3,6 @@ cls
 
 title Sakura Launcher
 py reportbot.py
-echo ur code broke
+echo Sorry, but something went wrong with the code.
 
 pause
