@@ -1,3 +1,4 @@
+requests
 image
 pymongo
 selenium
