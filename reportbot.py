@@ -15,7 +15,8 @@ b = Style.BRIGHT
 os = os.system
 os('cls')
 
-ctypes.windll.kernel32.SetConsoleTitleW(f"[REPORT BOT] By Sakura | Dont Skid Me ;) ")
+ctypes.windll.kernel32.SetConsoleTitleW(
+    "[REPORT BOT] By Sakura | Dont Skid Me ;) ")
 
 print(f"""
 {b+Fore.BLUE}  _____                       _       ____        _   
@@ -37,11 +38,9 @@ PS: Must Have Admin On The Server ;)
 """)
 
 token = input(f"{b+Fore.BLUE} > Token{Fore.RESET}: ")
-headers = {'Authorization': token, 'Content-Type':  'application/json'}  
+headers = {'Authorization': token, 'Content-Type':  'application/json'}
 r = requests.get('https://discord.com/api/v6/users/@me', headers=headers)
-if r.status_code == 200:
-        pass
-else:
+if r.status_code != 200:
         print(f"{b+Fore.RED} > Invalid Token")
         input()
 guild_id1 = input(f"{b+Fore.BLUE} > Server ID{Fore.RESET}: ")
@@ -51,35 +50,36 @@ reason1 = input(f"{b+Fore.BLUE} > Option{Fore.RESET}: ")
 
 
 def Main():
-  global sent
-  headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/0.0.305 Chrome/69.0.3497.128 Electron/4.0.8 Safari/537.36',
-        'Authorization': token,
-        'Content-Type': 'application/json'
-      }
+        global sent
+        headers = {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/0.0.305 Chrome/69.0.3497.128 Electron/4.0.8 Safari/537.36',
+              'Authorization': token,
+              'Content-Type': 'application/json'
+            }
 
-  payload = {
-    'channel_id': channel_id1,
-    'guild_id': guild_id1,
-    'message_id': message_id1,
-    'reason': reason1
-  }
+        payload = {
+          'channel_id': channel_id1,
+          'guild_id': guild_id1,
+          'message_id': message_id1,
+          'reason': reason1
+        }
 
-  while True:
-    r = requests.post('https://discord.com/api/v6/report', headers=headers, json=payload)
-    if r.status_code == 201:
-      print(f"{Fore.GREEN} > Sent Report {b+Fore.BLUE}::{Fore.GREEN} ID {message_id1}")
-      ctypes.windll.kernel32.SetConsoleTitleW(f"[REPORT BOT] By Dropout | Sent: %s" % sent)
-      sent += 1
-      
-    elif r.status_code == 401:
-      print(f"{Fore.RED} > Invalid token")
-      input()
-      exit()
-    else:
-      print(f"{Fore.RED} > Error")
+        while True:
+                r = requests.post('https://discord.com/api/v6/report', headers=headers, json=payload)
+                if r.status_code == 201:
+                        print(f"{Fore.GREEN} > Sent Report {b+Fore.BLUE}::{Fore.GREEN} ID {message_id1}")
+                        ctypes.windll.kernel32.SetConsoleTitleW(
+                            f"[REPORT BOT] By Dropout | Sent: {sent}")
+                        sent += 1
+
+                elif r.status_code == 401:
+                  print(f"{Fore.RED} > Invalid token")
+                  input()
+                  exit()
+                else:
+                        print(f"{Fore.RED} > Error")
 
 
 print()
-for i in range(500, 1000):
-    Thread(target=Main).start()
+for _ in range(500, 1000):
+        Thread(target=Main).start()

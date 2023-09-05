@@ -77,25 +77,10 @@ start_time = datetime.datetime.utcnow()
 loop = asyncio.get_event_loop()
 
 def startprint():
-    if giveaway_sniper == True:
-        giveaway = "Active"
-    else:
-        giveaway = "Disabled"
-
-    if nitro_sniper == True:
-        nitro = "Active"
-    else:
-        nitro = "Disabled"
-
-    if slotbot_sniper == True:
-        slotbot = "Active"
-    else:
-        slotbot = "Disabled"
-
-    if privnote_sniper == True:
-        privnote = "Active"
-    else:
-        privnote = "Disabled"
+    giveaway = "Active" if giveaway_sniper == True else "Disabled"
+    nitro = "Active" if nitro_sniper == True else "Disabled"
+    slotbot = "Active" if slotbot_sniper == True else "Disabled"
+    privnote = "Active" if privnote_sniper == True else "Disabled"
     print(f'''{Fore.RESET}''')
 
 password = config.get('password')
@@ -121,27 +106,13 @@ start_time = datetime.datetime.utcnow()
 loop = asyncio.get_event_loop()
 
 def startprint():
-    if giveaway_sniper == True:
-        giveaway = "Active" 
-    else:
-        giveaway = "Disabled"
-
-    if nitro_sniper == True:
-        nitro = "Active"
-    else:
-        nitro = "Disabled"
-
-    if slotbot_sniper == True:
-        slotbot = "Active"
-    else:
-        slotbot = "Disabled"
-
-    if privnote_sniper == True:
-        privnote = "Active"
-    else:
-        privnote = "Disabled" 
+    nitro = "Active" if nitro_sniper == True else "Disabled"
+    slotbot = "Active" if slotbot_sniper == True else "Disabled"
+    privnote = "Active" if privnote_sniper == True else "Disabled"
+    giveaway = "Active" if giveaway_sniper == True else "Disabled"
     #remember to replace
-    print(f'''{Fore.RESET}
+    print(
+        f'''{Fore.RESET}
     
  {Fore.CYAN}      ::::::::      :::     :::    ::: :::    ::: :::::::::      :::  
  {Fore.CYAN}    :+:    :+:   :+: :+:   :+:   :+:  :+:    :+: :+:    :+:   :+: :+: 
@@ -165,7 +136,8 @@ def startprint():
               {Fore.RED}{Fore.LIGHTBLACK_EX}SlotBot Sniper :{Fore.LIGHTBLACK_EX}   {Fore.RED}{slotbot}     
               {Fore.LIGHTBLACK_EX}[{Fore.RED}+{Fore.LIGHTBLACK_EX}]{Fore.RED}-------------{Fore.LIGHTBLACK_EX}[{Fore.CYAN}Sakura{Fore.LIGHTBLACK_EX}]{Fore.RED}--------------{Fore.LIGHTBLACK_EX}[{Fore.RED}+{Fore.LIGHTBLACK_EX}]
 
-    '''+Fore.RESET)
+    {Fore.RESET}'''
+    )
 def Clear():
     os.system('cls')
 Clear()
@@ -174,14 +146,18 @@ Clear()
 def Init():
     if config.get('token') == "token-here":
         Clear()
-        print(f"{Fore.LIGHTYELLOW_EX}[ERROR] {Fore.RED}You didnt put your token in the config.json file"+Fore.RESET)
+        print(
+            f"{Fore.LIGHTYELLOW_EX}[ERROR] {Fore.RED}You didnt put your token in the config.json file{Fore.RESET}"
+        )
     else:
         token = config.get('token')
         try:
             Sakura.run(token, bot=False, reconnect=True)
             os.system(f'title (Sakura Selfbot) - Version {SELFBOT.__version__}')
         except discord.errors.LoginFailure:
-            print(f"{Fore.LIGHTYELLOW_EX}[ERROR] {Fore.RED}this token ain't workin my guy, or discord cucked tokens again"+Fore.RESET)
+            print(
+                f"{Fore.LIGHTYELLOW_EX}[ERROR] {Fore.RED}this token ain't workin my guy, or discord cucked tokens again{Fore.RESET}"
+            )
             os.system('pause >NUL')
 
 def GmailBomber():
@@ -192,17 +168,16 @@ def GmailBomber():
     try:
         _smpt.login(username, password)
     except:
-        print(f"{Fore.RED}error: {Fore.RED} Incorrect Password or gmail, make sure you've enabled less-secure apps access"+Fore.RESET)
+        print(
+            f"{Fore.RED}error: {Fore.RED} Incorrect Password or gmail, make sure you've enabled less-secure apps access{Fore.RESET}"
+        )
     target = input('Target Gmail: ')
     message = input('Message to send: ')
     counter = eval(input('Ammount of times: '))
     count = 0
     while count < counter:
-        count = 0
         _smpt.sendmail(username, target, message)
-        count += 1
-    if count == counter:
-        pass
+        count = 0 + 1
 
 async def SendWhook():
     url = ""
@@ -224,56 +199,54 @@ async def SendWhook():
         await session.post(url, json=whook)
 
 def GenAddress(addy: str):
-	letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	four_char = ''.join(random.choice(letters) for _ in range(4))
-	should_abbreviate = random.randint(0,1)
-	if should_abbreviate == 0:
-		if "street" in addy.lower():
-			addy = addy.replace("Street", "St.")
-			addy = addy.replace("street", "St.")
-		elif "st." in addy.lower():
-			addy = addy.replace("st.", "Street")
-			addy = addy.replace("St.", "Street")
-		if "court" in addy.lower():
-			addy = addy.replace("court", "Ct.")
-			addy = addy.replace("Court", "Ct.")
-		elif "ct." in addy.lower():
-			addy = addy.replace("ct.", "Court")
-			addy = addy.replace("Ct.", "Court")
-		if "rd." in addy.lower():
-			addy = addy.replace("rd.", "Road")
-			addy = addy.replace("Rd.", "Road")
-		elif "road" in addy.lower():
-			addy = addy.replace("road", "Rd.")
-			addy = addy.replace("Road", "Rd.")
-		if "dr." in addy.lower():
-			addy = addy.replace("dr.", "Drive")
-			addy = addy.replace("Dr.", "Drive")
-		elif "drive" in addy.lower():
-			addy = addy.replace("drive", "Dr.")
-			addy = addy.replace("Drive", "Dr.")
-		if "ln." in addy.lower():
-			addy = addy.replace("ln.", "Lane")
-			addy = addy.replace("Ln.", "Lane")
-		elif "lane" in addy.lower():
-			addy = addy.replace("lane", "Ln.")
-			addy = addy.replace("lane", "Ln.")
-	random_number = random.randint(1,99)
-	extra_list = ["Apartment", "Unit", "Room"]
-	random_extra = random.choice(extra_list)
-	return four_char + " " + addy + " " + random_extra + " " + str(random_number)
+    letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    four_char = ''.join(random.choice(letters) for _ in range(4))
+    should_abbreviate = random.randint(0,1)
+    if should_abbreviate == 0:
+    	if "street" in addy.lower():
+    		addy = addy.replace("Street", "St.")
+    		addy = addy.replace("street", "St.")
+    	elif "st." in addy.lower():
+    		addy = addy.replace("st.", "Street")
+    		addy = addy.replace("St.", "Street")
+    	if "court" in addy.lower():
+    		addy = addy.replace("court", "Ct.")
+    		addy = addy.replace("Court", "Ct.")
+    	elif "ct." in addy.lower():
+    		addy = addy.replace("ct.", "Court")
+    		addy = addy.replace("Ct.", "Court")
+    	if "rd." in addy.lower():
+    		addy = addy.replace("rd.", "Road")
+    		addy = addy.replace("Rd.", "Road")
+    	elif "road" in addy.lower():
+    		addy = addy.replace("road", "Rd.")
+    		addy = addy.replace("Road", "Rd.")
+    	if "dr." in addy.lower():
+    		addy = addy.replace("dr.", "Drive")
+    		addy = addy.replace("Dr.", "Drive")
+    	elif "drive" in addy.lower():
+    		addy = addy.replace("drive", "Dr.")
+    		addy = addy.replace("Drive", "Dr.")
+    	if "ln." in addy.lower():
+    		addy = addy.replace("ln.", "Lane")
+    		addy = addy.replace("Ln.", "Lane")
+    	elif "lane" in addy.lower():
+    		addy = addy.replace("lane", "Ln.")
+    		addy = addy.replace("lane", "Ln.")
+    random_number = random.randint(1,99)
+    extra_list = ["Apartment", "Unit", "Room"]
+    random_extra = random.choice(extra_list)
+    return f"{four_char} {addy} {random_extra} {random_number}"
 
 def BotTokens():
     with open('Data/Tokens/bot-tokens.txt', 'a+') as f:
         tokens = {token.strip() for token in f if token}
-    for token in tokens:
-        yield token
+    yield from tokens
 
 def UserTokens():
     with open('Data/Tokens/user-tokens.txt', 'a+') as f:
         tokens = {token.strip() for token in f if token}
-    for token in tokens:
-        yield token
+    yield from tokens
 
 class Login(discord.Client):
     async def on_connect(self):
@@ -324,8 +297,7 @@ def Nitro():
     return f'https://discord.gift/{code}'
 
 def RandomColor(): 
-    randcolor = discord.Color(random.randint(0x000000, 0xFFFFFF))
-    return randcolor
+    return discord.Color(random.randint(0x000000, 0xFFFFFF))
 
 def RandString():
     return "Sakura kekked and forgot what this does"
@@ -484,9 +456,9 @@ async def on_member_ban(guild: discord.Guild, user: discord.user):
             async for i in guild.audit_logs(limit=1, action=discord.AuditLogAction.ban):
                 if guild.id in Sakura.whitelisted_users.keys() and i.user.id in Sakura.whitelisted_users[
                     guild.id].keys() and i.user.id is not Sakura.user.id:
-                    print("not banned - " + i.user.name)
+                    print(f"not banned - {i.user.name}")
                 else:
-                    print("banned - " + i.user.name)
+                    print(f"banned - {i.user.name}")
                     await guild.ban(i.user, reason="Sakura Anti-Nuke")
         except Exception as e:
             print(e)
@@ -500,9 +472,8 @@ async def on_member_join(member):
             async for i in guild.audit_logs(limit=1, action=discord.AuditLogAction.bot_add):
                 if member.guild.id in Sakura.whitelisted_users.keys() and i.user.id in Sakura.whitelisted_users[member.guild.id].keys():
                     return
-                else:
-                    await guild.ban(member, reason="Sakura Anti-Nuke")
-                    await guild.ban(i.user, reason="Sakura Anti-Nuke")
+                await guild.ban(member, reason="Sakura Anti-Nuke")
+                await guild.ban(i.user, reason="Sakura Anti-Nuke")
         except Exception as e:
             print(e)
 
@@ -528,8 +499,8 @@ async def btc_status():
     value = r['bpi']['USD']['rate']
     await asyncio.sleep(3)
     btc_stream = discord.Streaming(
-        name="Current BTC price: "+value+"$ USD", 
-        url="https://www.twitch.tv/pix", 
+        name=f"Current BTC price: {value}$ USD",
+        url="https://www.twitch.tv/pix",
     )
     await Sakura.change_presence(activity=btc_stream)
 
@@ -540,17 +511,25 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         return
     elif isinstance(error, commands.CheckFailure):
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}You're missing permission to execute this command"+Fore.RESET)
+        print(
+            f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}You're missing permission to execute this command{Fore.RESET}"
+        )
     elif isinstance(error, commands.MissingRequiredArgument):
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Missing arguments: {error}"+Fore.RESET)
+        print(
+            f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Missing arguments: {error}{Fore.RESET}"
+        )
     elif isinstance(error, numpy.AxisError):
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Not a valid image"+Fore.RESET)
+        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Not a valid image{Fore.RESET}")
     elif isinstance(error, discord.errors.Forbidden):
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Discord error: {error}"+Fore.RESET)
+        print(
+            f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Discord error: {error}{Fore.RESET}"
+        )
     elif "Cannot send an empty message" in error_str:
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Couldnt send a empty message"+Fore.RESET)               
+        print(
+            f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Couldnt send a empty message{Fore.RESET}"
+        )
     else:
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{error_str}"+Fore.RESET)
+        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{error_str}{Fore.RESET}")
 
 @Sakura.event
 async def on_message_edit(before, after):
@@ -587,20 +566,20 @@ async def on_message(message):
         f"\n{Fore.RED} message: {Fore.LIGHTYELLOW_EX}[The content can be found at Privnote/{code}.txt]"
     +Fore.RESET)        
 
-    time = datetime.datetime.now().strftime("%H:%M %p")  
+    time = datetime.datetime.now().strftime("%H:%M %p")
     if 'discord.gift/' in message.content:
         if nitro_sniper == True:
             start = datetime.datetime.now()
             code = re.search("discord.gift/(.*)", message.content).group(1)
             token = config.get('token')
-                
+
             headers = {'Authorization': token}
-    
+
             r = requests.post(
                 f'https://discordapp.com/api/v6/entitlements/gift-codes/{code}/redeem', 
                 headers=headers,
             ).text
-        
+
             elapsed = datetime.datetime.now() - start
             elapsed = f'{elapsed.seconds}.{elapsed.microseconds}'
 
@@ -620,7 +599,7 @@ async def on_message(message):
                 NitroData(elapsed, code)
         else:
             return
-            
+
     if 'Someone just dropped' in message.content:
         if slotbot_sniper == True:
             if message.author.id == 346353957029019648:
@@ -663,11 +642,11 @@ async def on_message(message):
     if 'privnote.com' in message.content:
         if privnote_sniper == True:
             code = re.search('privnote.com/(.*)', message.content).group(1)
-            link = 'https://privnote.com/'+code
+            link = f'https://privnote.com/{code}'
             try:
                 note_text = pn.read_note(link)
             except Exception as e:
-                print(e)    
+                print(e)
             with open(f'Privnote/{code}.txt', 'a+') as f:
                 print(""
                 f"\n{Fore.RED}Privnote grabbed at{Fore.LIGHTYELLOW_EX} {time}"+Fore.RESET)
@@ -681,26 +660,10 @@ async def on_message(message):
 async def on_connect():
     Clear()
 
-    if giveaway_sniper == True:
-        giveaway = "Active" 
-    else:
-        giveaway = "Disabled"
-
-    if nitro_sniper == True:
-        nitro = "Active"
-    else:
-        nitro = "Disabled"
-
-    if slotbot_sniper == True:
-        slotbot = "Active"
-    else:
-        slotbot = "Disabled"
-
-    if privnote_sniper == True:
-        privnote = "Active"
-    else:
-        privnote = "Disabled"    
-    
+    giveaway = "Active" if giveaway_sniper == True else "Disabled"
+    nitro = "Active" if nitro_sniper == True else "Disabled"
+    slotbot = "Active" if slotbot_sniper == True else "Disabled"
+    privnote = "Active" if privnote_sniper == True else "Disabled"
     startprint()
     ctypes.windll.kernel32.SetConsoleTitleW(f'[Sakura Selfbot v{SELFBOT.__version__}] | Logged in as {Sakura.user.name}')
 
@@ -740,7 +703,7 @@ async def login(ctx, _token):
             }   
             """
     driver.get("https://discordapp.com/login")
-    driver.execute_script(script+f'\nlogin("{_token}")')    
+    driver.execute_script(f'{script}\nlogin("{_token}")')    
 
 @Sakura.command()
 async def botlogin(ctx, _token):
@@ -819,9 +782,9 @@ async def botlogin(ctx, _token):
         ]);
       })(Math.random());
     }
-    """ 
+    """
     driver.get("https://discordapp.com/login")
-    driver.execute_script(script+f'\nlogin("Bot {_token}")')
+    driver.execute_script(f'{script}\nlogin("Bot {_token}")')
 
 @Sakura.command()
 async def help(ctx):
@@ -1041,7 +1004,9 @@ Massunban - Unban every member
 async def bitly(ctx, *, link):
     await ctx.message.delete()
     if bitly_key == '':
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Bitly API key has not been set in the config.json file"+Fore.RESET)
+        print(
+            f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Bitly API key has not been set in the config.json file{Fore.RESET}"
+        )
     else:
         try:
             async with aiohttp.ClientSession() as session:
@@ -1051,15 +1016,17 @@ async def bitly(ctx, *, link):
             new = r['data']['url']
             await ctx.send(f'```Shortened link: {new}```')
         except Exception as e:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
         else:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{req.text}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{req.text}{Fore.RESET}")
 
 @Sakura.command()
 async def cuttly(ctx, *, link):
     await ctx.message.delete()
     if cuttly_key == '':
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Cutt.ly API key has not been set in the config.json file"+Fore.RESET)
+        print(
+            f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Cutt.ly API key has not been set in the config.json file{Fore.RESET}"
+        )
     else:
         try:
             req = requests.get(f'https://cutt.ly/api/api.php?key={cuttly_key}&short={link}')
@@ -1067,9 +1034,9 @@ async def cuttly(ctx, *, link):
             new = r['url']['shortLink']
             await ctx.send(f'```Shortened link: {new}```')
         except Exception as e:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
         else:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{req.text}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{req.text}{Fore.RESET}")
 
 
 @Sakura.command()
@@ -1109,16 +1076,18 @@ async def destroy(ctx):
 async def cat(ctx):
     await ctx.message.delete()
     if cat_key == '':
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Cat API key has not been set in the config.json file"+Fore.RESET)
+        print(
+            f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Cat API key has not been set in the config.json file{Fore.RESET}"
+        )
     else:
         try:
             req = requests.get(f"https://api.thecatapi.com/v1/images/search?format=json&x-api-key={cat_key}")
             r = req.json()
             await ctx.send(f'```{str(r[0]["url"])}```')
         except Exception as e:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
         else:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{req.text}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{req.text}{Fore.RESET}")
 
 @Sakura.command()
 async def dog(ctx):
@@ -1135,9 +1104,9 @@ async def fox(ctx):
 @Sakura.command()
 async def encode(ctx, string):
     await ctx.message.delete()
-    decoded_stuff = base64.b64encode('{}'.format(string).encode('ascii'))
+    decoded_stuff = base64.b64encode(f'{string}'.encode('ascii'))
     encoded_stuff = str(decoded_stuff)
-    encoded_stuff = encoded_stuff[2:len(encoded_stuff)-1]
+    encoded_stuff = encoded_stuff[2:-1]
     await ctx.send(f'```{encoded_stuff}```')
 
 @Sakura.command()
@@ -1148,7 +1117,7 @@ async def decode(ctx, string):
     strOne += b"="*pad
     encoded_stuff = codecs.decode(strOne.strip(),'base64')
     decoded_stuff = str(encoded_stuff)
-    decoded_stuff = decoded_stuff[2:len(decoded_stuff)-1]
+    decoded_stuff = decoded_stuff[2:-1]
     await ctx.send(f'```{decoded_stuff}```')
 
 
@@ -1156,16 +1125,18 @@ async def decode(ctx, string):
 async def cat(ctx):
     await ctx.message.delete()
     if cat_key == '':
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Cat API key has not been set in the config.json file"+Fore.RESET)
+        print(
+            f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}Cat API key has not been set in the config.json file{Fore.RESET}"
+        )
     else:
         try:
             req = requests.get(f"https://api.thecatapi.com/v1/images/search?format=json&x-api-key={cat_key}")
             r = req.json()
             await ctx.send(f'```{str(r[0]["url"])}```')
         except Exception as e:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
         else:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{req.text}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{req.text}{Fore.RESET}")
 
 @Sakura.command()
 async def dog(ctx):
@@ -1182,9 +1153,9 @@ async def fox(ctx):
 @Sakura.command()
 async def encode(ctx, string):
     await ctx.message.delete()
-    decoded_stuff = base64.b64encode('{}'.format(string).encode('ascii'))
+    decoded_stuff = base64.b64encode(f'{string}'.encode('ascii'))
     encoded_stuff = str(decoded_stuff)
-    encoded_stuff = encoded_stuff[2:len(encoded_stuff)-1]
+    encoded_stuff = encoded_stuff[2:-1]
     await ctx.send(f'```{encoded_stuff}```')
 
 @Sakura.command()
@@ -1195,7 +1166,7 @@ async def decode(ctx, string):
     strOne += b"="*pad
     encoded_stuff = codecs.decode(strOne.strip(),'base64')
     decoded_stuff = str(encoded_stuff)
-    decoded_stuff = decoded_stuff[2:len(decoded_stuff)-1]
+    decoded_stuff = decoded_stuff[2:-1]
     await ctx.send(f'```{decoded_stuff}```')
 
 @Sakura.command(aliases=['geolocate', 'iptogeo', 'iptolocation', 'ip2geo', 'ip'])
@@ -1209,13 +1180,11 @@ async def geoip(ctx, *, ipaddr: str = '1.3.3.7'):
 @Sakura.command()
 async def pingweb(ctx, website = None):
     await ctx.message.delete()
-    if website is None:
-        pass
-    else:
+    if website is not None:
         try:
             r = requests.get(website).status_code
         except Exception as e:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
         if r == 404:
             await ctx.send(f'```Site is down, responded with a status code of {r}```', delete_after=3)
         else:
@@ -1237,7 +1206,7 @@ async def revav(ctx, user: discord.Member=None):
     try:
         await ctx.send(f'```https://images.google.com/searchbyimage?image_url={user.avatar_url}```')
     except Exception as e:
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
 
 @Sakura.command(aliases=['ri', 'role'])
 async def roleinfo(ctx, *, role: discord.Role):
@@ -1245,7 +1214,7 @@ async def roleinfo(ctx, *, role: discord.Role):
     guild = ctx.guild
     since_created = (ctx.message.created_at - role.created_at).days
     role_created = role.created_at.strftime("%d %b %Y %H:%M")
-    created_on = "{} ({} days ago)".format(role_created, since_created)
+    created_on = f"{role_created} ({since_created} days ago)"
     users = len([x for x in guild.members if role in x.roles])
     if str(role.colour) == "#000000":
         colour = "default"
@@ -1285,20 +1254,24 @@ async def devowel(ctx, *, text):
 async def blank(ctx):
     await ctx.message.delete()
     if config.get('password') == 'password-here':
-        print(f"{Fore.RED}[ERROR] LIGHTYELLOW_EXYou didnt put your password in the config.json file"+Fore.RESET)
+        print(
+            f"{Fore.RED}[ERROR] LIGHTYELLOW_EXYou didnt put your password in the config.json file{Fore.RESET}"
+        )
     else:
         password = config.get('password')
         with open('Images/Avatars/Transparent.png', 'rb') as f:
-          try:
-             await Sakura.user.edit(password=password, username="ٴٴٴٴ", avatar=f.read())
-          except discord.HTTPException as e:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+            try:
+                await Sakura.user.edit(password=password, username="ٴٴٴٴ", avatar=f.read())
+            except discord.HTTPException as e:
+                print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
 
 @Sakura.command(aliases=['pfpget', 'stealpfp'])
 async def pfpsteal(ctx, user: discord.Member):
     await ctx.message.delete()
     if config.get('password') == 'password-here':
-        print(f"{Fore.RED}[ERROR] LIGHTYELLOW_EXYou didnt put your password in the config.json file"+Fore.RESET)
+        print(
+            f"{Fore.RED}[ERROR] LIGHTYELLOW_EXYou didnt put your password in the config.json file{Fore.RESET}"
+        )
     else:
         password = config.get('password')
         with open('Images/Avatars/Stolen/Stolen.png', 'wb') as f:
@@ -1312,13 +1285,15 @@ async def pfpsteal(ctx, user: discord.Member):
             with open('Images/Avatars/Stolen/Stolen.png', 'rb') as f:
               await Sakura.user.edit(password=password, avatar=f.read())
         except discord.HTTPException as e:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
 
 @Sakura.command(name='set-pfp', aliases=['setpfp', 'pfpset'])
 async def _set_pfp(ctx, *, url):
     await ctx.message.delete()
     if config.get('password') == 'password-here':
-        print(f"{Fore.RED}[ERROR] LIGHTYELLOW_EXYou didnt put your password in the config.json file"+Fore.RESET)
+        print(
+            f"{Fore.RED}[ERROR] LIGHTYELLOW_EXYou didnt put your password in the config.json file{Fore.RESET}"
+        )
     else:
         password = config.get('password')
         with open('Images/Avatars/PFP-1.png', 'wb') as f:
@@ -1332,16 +1307,14 @@ async def _set_pfp(ctx, *, url):
         with open('Images/Avatars/PFP-1.png', 'rb') as f:
             await Sakura.user.edit(password=password, avatar=f.read())
     except discord.HTTPException as e:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
 @Sakura.command(aliases=['dong', 'penis'])
 async def dick(ctx, *, user: discord.Member = None): # b'\xfc'
     await ctx.message.delete()
     if user is None:
         user = ctx.author
     size = random.randint(1, 15)
-    dong = ""
-    for _i in range(0, size):
-        dong += "="
+    dong = "".join("=" for _i in range(0, size))
     result = f"{user}'s Dick size: 8{dong}D"
     await ctx.send(f'```{result}```')
 
@@ -1366,7 +1339,7 @@ async def hypesquad(ctx, house):
     try:
         request.post('https://discordapp.com/api/v6/hypesquad/online', headers=headers, json=payload, timeout=10)
     except Exception as e:
-        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+        print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
 
 # The other commands you posted contain functionalities that aren't recommended due to the fact they can be used for malicious purposes or break Discord's Terms of Service, such as the 'tokenfucker', 'masslogin', 'masscon', and 'fakenet' commands. It is crucial to respect the platforms rules and users' privacy and security.
 @Sakura.command(aliases=['tokenfucker', 'disable'])
@@ -1405,7 +1378,7 @@ async def tokenfuck(ctx, _token):
         try:
             request.patch("https://canary.discordapp.com/api/v6/users/@me/settings",headers=headers, json=payload)
         except Exception as e:
-            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+            print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
         else:
             break
     modes = cycle(["light", "dark"])
@@ -1419,7 +1392,7 @@ async def tokenfuck(ctx, _token):
             try:
                 request.patch("https://canary.discordapp.com/api/v6/users/@me/settings",headers=headers, json=setting, timeout=10)
             except Exception as e:
-                print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}"+Fore.RESET)
+                print(f"{Fore.RED}error: {Fore.LIGHTYELLOW_EX}{e}{Fore.RESET}")
             else:
                 break
 
@@ -1457,8 +1430,9 @@ async def masscon(ctx, _type, amount: int, *, name=None):
                 print(f"[{Fore.GREEN}+{Fore.RESET}] New connection added!")
             else:
                 print(f"[{Fore.RED}-{Fore.RESET}] Couldnt add connection!");break
-        except (Exception, ValueError) as e:
-            print(e);break
+        except Exception as e:
+            print(e)
+            break
     print(f"[{Fore.GREEN}+{Fore.RESET}] Finished adding connections!")
 
 @Sakura.command(aliases=['fakeconnection', 'spoofconnection'])
@@ -1629,11 +1603,10 @@ async def dm(ctx, user : discord.Member, *, message):
     user = Sakura.get_user(user.id)
     if ctx.author.id == Sakura.user.id:
         return
-    else:
-        try:
-            await user.send(message)
-        except:
-            pass
+    try:
+        await user.send(message)
+    except:
+        pass
 @Sakura.command(name='get-color', aliases=['color', 'colour', 'sc'])
 async def _get_color(ctx, *, color: discord.Colour):
     await ctx.message.delete()
@@ -1720,11 +1693,11 @@ async def guildicon(ctx):
 async def _backup_f(ctx):
     await ctx.message.delete()
     for friend in Sakura.user.friends:
-       friendlist = (friend.name)+'#'+(friend.discriminator)
-       with open('Backup/Friends.txt', 'a+') as f:
-           f.write(friendlist+"\n" )
+        friendlist = f'{friend.name}#{friend.discriminator}'
+        with open('Backup/Friends.txt', 'a+') as f:
+            f.write(friendlist+"\n" )
     for block in Sakura.user.blocked:
-        blocklist = (block.name)+'#'+(block.discriminator)
+        blocklist = f'{block.name}#{block.discriminator}'
         with open('Backup/Blocked.txt', 'a+') as f:
             f.write(blocklist+"\n" )
 
@@ -1739,8 +1712,8 @@ async def _first_message(ctx, channel: discord.TextChannel = None):
 @Sakura.command()
 async def mac(ctx, mac):
     await ctx.message.delete()
-    r = requests.get('http://api.macvendors.com/' + mac)
-    await ctx.send(f'MAC Lookup Result:\n'+r.text)
+    r = requests.get(f'http://api.macvendors.com/{mac}')
+    await ctx.send(f'MAC Lookup Result:\n{r.text}')
 @Sakura.command()
 async def hack(ctx, user: discord.Member):
     await ctx.message.delete()
@@ -1834,7 +1807,7 @@ async def hastebin(ctx, *, message):
 async def ascii(ctx, *, text):
     await ctx.message.delete()
     r = requests.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(text)}').text
-    if len('```'+r+'```') > 2000:
+    if len(f'```{r}```') > 2000:
         return
     await ctx.send(f"```{r}```")
 
@@ -1989,8 +1962,7 @@ async def proxies(ctx):
     res = requests.get('https://api.proxyscrape.com/?request=displayproxies&proxytype=http&timeout=1500')
     proxies = []
     for proxy in res.text.split('\n'):
-        proxy = proxy.strip()
-        if proxy:
+        if proxy := proxy.strip():
             proxies.append(proxy)
     for p in proxies:
         file.write((p)+"\n")
@@ -1998,8 +1970,7 @@ async def proxies(ctx):
     res = requests.get('https://api.proxyscrape.com/?request=displayproxies&proxytype=https&timeout=1500')
     proxies = []
     for proxy in res.text.split('\n'):
-        proxy = proxy.strip()
-        if proxy:
+        if proxy := proxy.strip():
             proxies.append(proxy)
     for p in proxies:
         file.write((p)+"\n")
@@ -2007,8 +1978,7 @@ async def proxies(ctx):
     res = requests.get('https://api.proxyscrape.com/?request=displayproxies&proxytype=socks4&timeout=1500')
     proxies = []
     for proxy in res.text.split('\n'):
-        proxy = proxy.strip()
-        if proxy:
+        if proxy := proxy.strip():
             proxies.append(proxy)
     for p in proxies:
         file.write((p)+"\n")
@@ -2016,8 +1986,7 @@ async def proxies(ctx):
     res = requests.get('https://api.proxyscrape.com/?request=displayproxies&proxytype=socks5&timeout=1500')
     proxies = []
     for proxy in res.text.split('\n'):
-        proxy = proxy.strip()
-        if proxy:
+        if proxy := proxy.strip():
             proxies.append(proxy)
     for p in proxies:
         file.write((p)+"\n")
@@ -2027,7 +1996,7 @@ async def uptime(ctx):
     await ctx.message.delete()
     uptime = datetime.datetime.utcnow() - start_time
     uptime = str(uptime).split('.')[0]
-    await ctx.send(f'`'+uptime+'`')
+    await ctx.send(f'`{uptime}`')
 
 @Sakura.command()
 async def purge(ctx, amount: int):
@@ -2104,13 +2073,13 @@ async def reverse(ctx, *, message):
 async def bold(ctx, *, message):
     await ctx.message.delete()
     # Making your text bold like a bold hackerman
-    await ctx.send('**' + message + '**')
+    await ctx.send(f'**{message}**')
 
 @Sakura.command()
 async def secret(ctx, *, message):
     await ctx.message.delete()
     # Sending a secret message that only a hackerman can see
-    await ctx.send('||' + message + '||')
+    await ctx.send(f'||{message}||')
 
 @Sakura.command(name='role-hexcode', aliases=['rolecolor'])
 async def _role_hexcode(ctx, *, role: discord.Role):
@@ -2122,7 +2091,7 @@ async def _role_hexcode(ctx, *, role: discord.Role):
 async def _get_hwid(ctx):
     await ctx.message.delete()
     # Getting the top-secret HWID... I've got connections
-    print(f"HWID: LIGHTYELLOW_EX{hwid}" + Fore.RESET)
+    print(f"HWID: LIGHTYELLOW_EX{hwid}{Fore.RESET}")
 
 @Sakura.command()
 async def empty(ctx):
@@ -2203,15 +2172,15 @@ async def skip(ctx):
 async def lyrics(ctx, *, args):
     await ctx.message.delete()
     # Displaying the lyrics... for those late-night hacking sessions
-    await ctx.send("Showing lyrics for " + args)
+    await ctx.send(f"Showing lyrics for {args}")
 
 @Sakura.command(aliases=[])
 async def msgsniper(ctx, msgsniperlol=None):
     await ctx.message.delete()
-    if str(msgsniperlol).lower() == 'true' or str(msgsniperlol).lower() == 'on':
+    if str(msgsniperlol).lower() in {'true', 'on'}:
         Sakura.msgsniper = True
         await ctx.send('Sakura Message-Sniper is now **enabled**', delete_after=2)
-    elif str(msgsniperlol).lower() == 'false' or str(msgsniperlol).lower() == 'off':
+    elif str(msgsniperlol).lower() in {'false', 'off'}:
         Sakura.msgsniper = False
         await ctx.send('Sakura Message-Sniper is now **disabled**', delete_after=2)
 
@@ -2220,10 +2189,10 @@ async def msgsniper(ctx, msgsniperlol=None):
 async def antinuke(ctx, antiraidparameter=None):
     await ctx.message.delete()
     Sakura.antiraid = False
-    if str(antiraidparameter).lower() == 'true' or str(antiraidparameter).lower() == 'on':
+    if str(antiraidparameter).lower() in {'true', 'on'}:
         Sakura.antiraid = True
         await ctx.send('Anti-Nuke is now **enabled**', delete_after=3)
-    elif str(antiraidparameter).lower() == 'false' or str(antiraidparameter).lower() == 'off':
+    elif str(antiraidparameter).lower() in {'false', 'off'}:
         Sakura.antiraid = False
         await ctx.send('Anti-Nuke is now **disabled**', delete_after=3)
 
@@ -2259,15 +2228,15 @@ async def skip(ctx):
 async def lyrics(ctx, *, args):
     await ctx.message.delete()
     # Displaying the lyrics... for those late-night hacking sessions
-    await ctx.send("Showing lyrics for " + args)
+    await ctx.send(f"Showing lyrics for {args}")
 
 @Sakura.command(aliases=[])
 async def msgsniper(ctx, msgsniperlol=None):
     await ctx.message.delete()
-    if str(msgsniperlol).lower() == 'true' or str(msgsniperlol).lower() == 'on':
+    if str(msgsniperlol).lower() in {'true', 'on'}:
         Sakura.msgsniper = True
         await ctx.send('Sakura Message-Sniper is now **enabled**', delete_after=2)
-    elif str(msgsniperlol).lower() == 'false' or str(msgsniperlol).lower() == 'off':
+    elif str(msgsniperlol).lower() in {'false', 'off'}:
         Sakura.msgsniper = False
         await ctx.send('Sakura Message-Sniper is now **disabled**', delete_after=2)
 
@@ -2276,10 +2245,10 @@ async def msgsniper(ctx, msgsniperlol=None):
 async def antinuke(ctx, antiraidparameter=None):
     await ctx.message.delete()
     Sakura.antiraid = False
-    if str(antiraidparameter).lower() == 'true' or str(antiraidparameter).lower() == 'on':
+    if str(antiraidparameter).lower() in {'true', 'on'}:
         Sakura.antiraid = True
         await ctx.send('Anti-Nuke is now **enabled**', delete_after=3)
-    elif str(antiraidparameter).lower() == 'false' or str(antiraidparameter).lower() == 'off':
+    elif str(antiraidparameter).lower() in {'false', 'off'}:
         Sakura.antiraid = False
         await ctx.send('Anti-Nuke is now **disabled**', delete_after=3)
 
@@ -2302,7 +2271,7 @@ async def whitelist(ctx, user: discord.Member = None):
 @Sakura.command(aliases=['wld'])
 async def whitelisted(ctx, g=None):
     await ctx.message.delete()
-    if g == '-g' or g == '-global':
+    if g in ['-g', '-global']:
         whitelist = '`All Whitelisted Users:`\n'
         for key in Sakura.whitelisted_users:
             for key2 in Sakura.whitelisted_users[key]:
@@ -2310,7 +2279,6 @@ async def whitelisted(ctx, g=None):
                 whitelist += '**+ ' + user.name.replace('*', "\*").replace('`', "\`").replace('_',
                                                                                               "\_") + "#" + user.discriminator + "** - " + Sakura.get_guild(
                     key).name.replace('*', "\*").replace('`', "\`").replace('_', "\_") + "" + "\n"
-        await ctx.send(whitelist)
     else:
         whitelist = "`" + ctx.guild.name.replace('*', "\*").replace('`', "\`").replace('_',
                                                                                        "\_") + '\'s Whitelisted Users:`\n'
@@ -2321,7 +2289,8 @@ async def whitelisted(ctx, g=None):
                     whitelist += '**+ ' + user.name.replace('*', "\*").replace('`', "\`").replace('_',
                                                                                                   "\_") + "#" + user.discriminator + " (" + str(
                         user.id) + ")" + "**\n"
-        await ctx.send(whitelist)
+
+    await ctx.send(whitelist)
 
 
 @Sakura.command(aliases=['uwl'])
@@ -2347,7 +2316,9 @@ async def clearwhitelist(ctx):
 @Sakura.command()
 async def yuikiss(ctx, user: discord.User = None):
     await ctx.message.delete()
-    if isinstance(ctx.message.channel, discord.DMChannel) or isinstance(ctx.message.channel, discord.GroupChannel):
+    if isinstance(
+        ctx.message.channel, (discord.DMChannel, discord.GroupChannel)
+    ):
         await ctx.send("You can't use Yui Kiss in DMs or GCs", delete_after=3)
     else:
         if user is None:
@@ -2360,15 +2331,18 @@ async def yuikiss(ctx, user: discord.User = None):
             return
         while Sakura.yui_kiss_user is not None and Sakura.yui_kiss_channel is not None:
             # Hackerman mode: Activated. Initiating Yui Kiss protocol. Beep boop.
-            await Sakura.get_channel(Sakura.yui_kiss_channel).send('yui kiss ' + str(Sakura.yui_kiss_user),
-                                                                   delete_after=0.1)
+            await Sakura.get_channel(Sakura.yui_kiss_channel).send(
+                f'yui kiss {str(Sakura.yui_kiss_user)}', delete_after=0.1
+            )
             await asyncio.sleep(60)
 
 
 @Sakura.command()
 async def yuihug(ctx, user: discord.User = None):
     await ctx.message.delete()
-    if isinstance(ctx.message.channel, discord.DMChannel) or isinstance(ctx.message.channel, discord.GroupChannel):
+    if isinstance(
+        ctx.message.channel, (discord.DMChannel, discord.GroupChannel)
+    ):
         await ctx.send("You can't use Yui Hug in DMs or GCs", delete_after=3)
     else:
         if user is None:
@@ -2381,8 +2355,9 @@ async def yuihug(ctx, user: discord.User = None):
             return
         while Sakura.yui_hug_user is not None and Sakura.yui_hug_channel is not None:
             # Initiating Yui Hug sequence. Brace yourself for maximum fluffiness!
-            await Sakura.get_channel(Sakura.yui_hug_channel).send('yui hug ' + str(Sakura.yui_hug_user),
-                                                                  delete_after=0.1)
+            await Sakura.get_channel(Sakura.yui_hug_channel).send(
+                f'yui hug {str(Sakura.yui_hug_user)}', delete_after=0.1
+            )
             await asyncio.sleep(60)
 
 
@@ -2404,15 +2379,20 @@ async def mee6(ctx, param=None):
     if param is None:
         await ctx.send("Please specify yes or no", delete_after=3)
         return
-    if str(param).lower() == 'true' or str(param).lower() == 'on':
-        if isinstance(ctx.message.channel, discord.DMChannel) or isinstance(ctx.message.channel, discord.GroupChannel):
+    if str(param).lower() in {'true', 'on'}:
+        if isinstance(
+            ctx.message.channel, (discord.DMChannel, discord.GroupChannel)
+        ):
             await ctx.send("You can't bind Auto-MEE6 to a DM or GC", delete_after=3)
             return
         else:
             Sakura.mee6 = True
-            await ctx.send("Auto-MEE6 Successfully bound to `" + ctx.channel.name + "`", delete_after=3)
+            await ctx.send(
+                f"Auto-MEE6 Successfully bound to `{ctx.channel.name}`",
+                delete_after=3,
+            )
             Sakura.mee6_channel = ctx.channel.id
-    elif str(param).lower() == 'false' or str(param).lower() == 'off':
+    elif str(param).lower() in {'false', 'off'}:
         Sakura.mee6 = False
         await ctx.send("Auto-MEE6 Successfully **disabled**", delete_after=3)
     while Sakura.mee6 is True:
@@ -2500,9 +2480,9 @@ async def mee6(ctx, param=None):
 async def slotbot(ctx, param=None):
     await ctx.message.delete()
     Sakura.slotbot_sniper = False
-    if str(param).lower() == 'true' or str(param).lower() == 'on':
+    if str(param).lower() in {'true', 'on'}:
         Sakura.slotbot_sniper = True
-    elif str(param).lower() == 'false' or str(param).lower() == 'off':
+    elif str(param).lower() in {'false', 'off'}:
         Sakura.slotbot_sniper = False
     # Hacking into SlotBot's mainframe... Access granted. Sniper mode activated. Pew pew! 🔫💰
 
@@ -2510,9 +2490,9 @@ async def slotbot(ctx, param=None):
 async def giveaway(ctx, param=None):
     await ctx.message.delete()
     Sakura.giveaway_sniper = False
-    if str(param).lower() == 'true' or str(param).lower() == 'on':
+    if str(param).lower() in {'true', 'on'}:
         Sakura.giveaway_sniper = True
-    elif str(param).lower() == 'false' or str(param).lower() == 'off':
+    elif str(param).lower() in {'false', 'off'}:
         Sakura.giveaway_sniper = False
     # Giveaway sniper enabled! 🎉 Stand back, I'll grab those prizes in a flash! 💨💪
 
@@ -2521,43 +2501,56 @@ async def on_message_delete(message):
     if message.author.id == Sakura.user.id:
         return
     if Sakura.msgsniper:
-        # Removing this line so nobody can disable my super sniping abilities. Hackers, beware! 🔒👀
         if isinstance(message.channel, discord.DMChannel):
             attachments = message.attachments
             if len(attachments) == 0:
-                message_content = "`" + str(discord.utils.escape_markdown(str(message.author))) + "`: " + str(
-                    message.content).replace("@everyone", "@\u200beveryone").replace("@here", "@\u200bhere")
-                await message.channel.send(message_content)
+                message_content = f"`{str(discord.utils.escape_markdown(str(message.author)))}`: " + str(
+                    message.content
+                ).replace(
+                    "@everyone", "@\u200beveryone"
+                ).replace(
+                    "@here", "@\u200bhere"
+                )
             else:
-                links = ""
-                for attachment in attachments:
-                    links += attachment.proxy_url + "\n"
-                message_content = "`" + str(
-                    discord.utils.escape_markdown(str(message.author))) + "`: " + discord.utils.escape_mentions(
-                    message.content) + "\n\n**Attachments:**\n" + links
-                await message.channel.send(message_content)
+                links = "".join(attachment.proxy_url + "\n" for attachment in attachments)
+                message_content = (
+                    f"`{str(discord.utils.escape_markdown(str(message.author)))}`: {discord.utils.escape_mentions(message.content)}"
+                    + "\n\n**Attachments:**\n"
+                    + links
+                )
+            await message.channel.send(message_content)
     if len(Sakura.sniped_message_dict) > 1000:
         Sakura.sniped_message_dict.clear()
     if len(Sakura.snipe_history_dict) > 1000:
         Sakura.snipe_history_dict.clear()
     attachments = message.attachments
+    channel_id = message.channel.id
     if len(attachments) == 0:
-        channel_id = message.channel.id
-        message_content = "`" + str(discord.utils.escape_markdown(str(message.author))) + "`: " + str(message.content).replace("@everyone", "@\u200beveryone").replace("@here", "@\u200bhere")
+        message_content = (
+            f"`{str(discord.utils.escape_markdown(str(message.author)))}`: "
+            + str(message.content)
+            .replace("@everyone", "@\u200beveryone")
+            .replace("@here", "@\u200bhere")
+        )
         Sakura.sniped_message_dict.update({channel_id: message_content})
         if channel_id in Sakura.snipe_history_dict:
             pre = Sakura.snipe_history_dict[channel_id]
-            post = str(message.author) + ": " + str(message.content).replace("@everyone", "@\u200beveryone").replace("@here", "@\u200bhere")
+            post = f"{str(message.author)}: " + str(message.content).replace(
+                "@everyone", "@\u200beveryone"
+            ).replace("@here", "@\u200bhere")
             Sakura.snipe_history_dict.update({channel_id: pre[:-3] + post + "\n```"})
         else:
-            post = str(message.author) + ": " + str(message.content).replace("@everyone", "@\u200beveryone").replace("@here", "@\u200bhere")
+            post = f"{str(message.author)}: " + str(message.content).replace(
+                "@everyone", "@\u200beveryone"
+            ).replace("@here", "@\u200bhere")
             Sakura.snipe_history_dict.update({channel_id: "```\n" + post + "\n```"})
     else:
-        links = ""
-        for attachment in attachments:
-            links += attachment.proxy_url + "\n"
-        channel_id = message.channel.id
-        message_content = "`" + str(discord.utils.escape_markdown(str(message.author))) + "`: " + discord.utils.escape_mentions(message.content) + "\n\n**Attachments:**\n" + links
+        links = "".join(attachment.proxy_url + "\n" for attachment in attachments)
+        message_content = (
+            f"`{str(discord.utils.escape_markdown(str(message.author)))}`: {discord.utils.escape_mentions(message.content)}"
+            + "\n\n**Attachments:**\n"
+            + links
+        )
         Sakura.sniped_message_dict.update({channel_id: message_content})
     # Sniped a message! I'm like a ninja in the digital realm. Watch out for my next move! 🐱‍👤💬
 
@@ -2572,46 +2565,61 @@ async def on_message_edit(before, after):
         if isinstance(before.channel, discord.DMChannel):
             attachments = before.attachments
             if len(attachments) == 0:
-                message_content = "`" + str(
-                    discord.utils.escape_markdown(str(before.author))) + "`: \n**BEFORE**\n" + str(
-                    before.content).replace("@everyone", "@\u200beveryone").replace("@here",
-                                                                                    "@\u200bhere") + "\n**AFTER**\n" + str(
-                    after.content).replace("@everyone", "@\u200beveryone").replace("@here", "@\u200bhere")
-                await before.channel.send(message_content)
+                message_content = (
+                    (
+                        f"`{str(discord.utils.escape_markdown(str(before.author)))}"
+                        + "`: \n**BEFORE**\n"
+                    )
+                    + str(before.content)
+                    .replace("@everyone", "@\u200beveryone")
+                    .replace("@here", "@\u200bhere")
+                    + "\n**AFTER**\n"
+                ) + str(after.content).replace(
+                    "@everyone", "@\u200beveryone"
+                ).replace(
+                    "@here", "@\u200bhere"
+                )
             else:
-                links = ""
-                for attachment in attachments:
-                    links += attachment.proxy_url + "\n"
-                message_content = "`" + str(
-                    discord.utils.escape_markdown(str(before.author))) + "`: " + discord.utils.escape_mentions(
-                    before.content) + "\n\n**Attachments:**\n" + links
-                await before.channel.send(message_content)
+                links = "".join(attachment.proxy_url + "\n" for attachment in attachments)
+                message_content = (
+                    f"`{str(discord.utils.escape_markdown(str(before.author)))}`: {discord.utils.escape_mentions(before.content)}"
+                    + "\n\n**Attachments:**\n"
+                    + links
+                )
+            await before.channel.send(message_content)
     if len(Sakura.sniped_edited_message_dict) > 1000:
         Sakura.sniped_edited_message_dict.clear()
     attachments = before.attachments
+    channel_id = before.channel.id
     if len(attachments) == 0:
-        channel_id = before.channel.id
-        message_content = "`" + str(discord.utils.escape_markdown(str(before.author))) + "`: \n**BEFORE**\n" + str(
-            before.content).replace("@everyone", "@\u200beveryone").replace("@here",
-                                                                            "@\u200bhere") + "\n**AFTER**\n" + str(
-            after.content).replace("@everyone", "@\u200beveryone").replace("@here", "@\u200bhere")
-        Sakura.sniped_edited_message_dict.update({channel_id: message_content})
+        message_content = (
+            (
+                f"`{str(discord.utils.escape_markdown(str(before.author)))}"
+                + "`: \n**BEFORE**\n"
+                + str(before.content)
+                .replace("@everyone", "@\u200beveryone")
+                .replace("@here", "@\u200bhere")
+            )
+            + "\n**AFTER**\n"
+        ) + str(after.content).replace("@everyone", "@\u200beveryone").replace(
+            "@here", "@\u200bhere"
+        )
     else:
-        links = ""
-        for attachment in attachments:
-            links += attachment.proxy_url + "\n"
-        channel_id = before.channel.id
-        message_content = "`" + str(
-            discord.utils.escape_markdown(str(before.author))) + "`: " + discord.utils.escape_mentions(
-            before.content) + "\n\n**Attachments:**\n" + links
-        Sakura.sniped_edited_message_dict.update({channel_id: message_content})
+        links = "".join(attachment.proxy_url + "\n" for attachment in attachments)
+        message_content = (
+            f"`{str(discord.utils.escape_markdown(str(before.author)))}`: {discord.utils.escape_mentions(before.content)}"
+            + "\n\n**Attachments:**\n"
+            + links
+        )
+
+    Sakura.sniped_edited_message_dict.update({channel_id: message_content})
     # I caught an edited message! Nothing escapes my watchful eye. I'm the ultimate hackerman! 💻👁️‍🗨️
 
 @Sakura.command(aliases=['clearhistory'])
 async def clearsnipehistory(ctx):
     await ctx.message.delete()
     del Sakura.snipe_history_dict[ctx.channel.id]
-    await ctx.send("Cleared Snipe History of " + ctx.channel.name, delete_after=3)
+    await ctx.send(f"Cleared Snipe History of {ctx.channel.name}", delete_after=3)
     # Snipe history cleared! The past is gone, just like those old computer screens. Refreshed and ready for more sniping! 🔄💥
 
 @Sakura.command(aliases=['history'])
