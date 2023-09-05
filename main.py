@@ -2680,11 +2680,16 @@ async def adminservers(ctx):
 @Sakura.command()
 async def bots(ctx):
     await ctx.message.delete()
-    bots = []
-    for member in ctx.guild.members:
-        if member.bot:
-            bots.append(
-                str(member.name).replace("`", "\`").replace("*", "\*").replace("_", "\_") + "#" + member.discriminator)
+    bots = [
+        str(member.name)
+        .replace("`", "\`")
+        .replace("*", "\*")
+        .replace("_", "\_")
+        + "#"
+        + member.discriminator
+        for member in ctx.guild.members
+        if member.bot
+    ]
     bottiez = f"**Bots ({len(bots)}):**\n{', '.join(bots)}"
     await ctx.send(bottiez)
 
@@ -2714,14 +2719,17 @@ async def image(ctx, *, args):
     page = requests.get(url)
     soup = bs4(page.text, 'html.parser')
     image_tags = soup.findAll('img')
-    if str(image_tags[2]['src']).find("https://trkn.us/pixel/imp/c=") > -1:
+    if "https://trkn.us/pixel/imp/c=" in str(image_tags[2]['src']):
         link = image_tags[2]['src']
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(link) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await ctx.send(f"Search result for: **{args}**", file=discord.File(file, f"Sakura_img.png"))
+                await ctx.send(
+                    f"Search result for: **{args}**",
+                    file=discord.File(file, "Sakura_img.png"),
+                )
         except:
             await ctx.send(f"{link}\nSearch result for: **{args}**")
     else:
@@ -2742,7 +2750,7 @@ async def tweet2(ctx, username: str = None, *, message: str = None):
                     async with session.get(str(res['message'])) as resp:
                         image = await resp.read()
                 with io.BytesIO(image) as file:
-                    await ctx.send(file=discord.File(file, f"Sakura_tweet.png"))
+                    await ctx.send(file=discord.File(file, "Sakura_tweet.png"))
             except:
                 await ctx.send(res['message'])
 
@@ -2760,7 +2768,7 @@ async def magik(ctx, user: discord.Member = None):
                 async with session.get(str(res['message'])) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_magik.png"))
+                await ctx.send(file=discord.File(file, "Sakura_magik.png"))
         except:
             await ctx.send(res['message'])
     else:
@@ -2773,9 +2781,9 @@ async def magik(ctx, user: discord.Member = None):
                 async with session.get(str(res['message'])) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_magik.png"))
+                await ctx.send(file=discord.File(file, "Sakura_magik.png"))
         except:
-            await ctx.send("Nothing found for **" + args + "**")
+            await ctx.send(f"Nothing found for **{args}**")
 
 
 # Hackerman joke: "Scouring the depths of the internet to find the perfect image. Prepare to be amazed!"
@@ -2861,7 +2869,7 @@ async def tweet2(ctx, username: str = None, *, message: str = None):
                     async with session.get(str(res['message'])) as resp:
                         image = await resp.read()
                 with io.BytesIO(image) as file:
-                    await ctx.send(file=discord.File(file, f"Sakura_tweet.png"))
+                    await ctx.send(file=discord.File(file, "Sakura_tweet.png"))
             except:
                 await ctx.send(res['message'])
 
@@ -2869,33 +2877,21 @@ async def tweet2(ctx, username: str = None, *, message: str = None):
 @Sakura.command(aliases=["distort"])
 async def magik(ctx, user: discord.Member = None):
     await ctx.message.delete()
-    endpoint = "https://nekobot.xyz/api/imagegen?type=magik&intensity=3&image="
     if user is None:
         avatar = str(ctx.author.avatar_url_as(format="png"))
-        endpoint += avatar
-        r = requests.get(endpoint)
-        res = r.json()
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(str(res['message'])) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_magik.png"))
-        except:
-            await ctx.send(res['message'])
     else:
         avatar = str(user.avatar_url_as(format="png"))
-        endpoint += avatar
-        r = requests.get(endpoint)
-        res = r.json()
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(str(res['message'])) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_magik.png"))
-        except:
-            await ctx.send(res['message'])
+    endpoint = f"https://nekobot.xyz/api/imagegen?type=magik&intensity=3&image={avatar}"
+    r = requests.get(endpoint)
+    res = r.json()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(str(res['message'])) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(file=discord.File(file, "Sakura_magik.png"))
+    except:
+        await ctx.send(res['message'])
 
 
 
@@ -2913,7 +2909,7 @@ async def tweet2(ctx, username: str = None, *, message: str = None):
                     async with session.get(str(res['message'])) as resp:
                         image = await resp.read()
                 with io.BytesIO(image) as file:
-                    await ctx.send(file=discord.File(file, f"Sakura_tweet.png"))
+                    await ctx.send(file=discord.File(file, "Sakura_tweet.png"))
             except:
                 await ctx.send(res['message'])
 
@@ -2921,33 +2917,21 @@ async def tweet2(ctx, username: str = None, *, message: str = None):
 @Sakura.command(aliases=["distort"])
 async def magik(ctx, user: discord.Member = None):
     await ctx.message.delete()
-    endpoint = "https://nekobot.xyz/api/imagegen?type=magik&intensity=3&image="
     if user is None:
         avatar = str(ctx.author.avatar_url_as(format="png"))
-        endpoint += avatar
-        r = requests.get(endpoint)
-        res = r.json()
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(str(res['message'])) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_magik.png"))
-        except:
-            await ctx.send(res['message'])
     else:
         avatar = str(user.avatar_url_as(format="png"))
-        endpoint += avatar
-        r = requests.get(endpoint)
-        res = r.json()
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(str(res['message'])) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_magik.png"))
-        except:
-            await ctx.send(res['message'])
+    endpoint = f"https://nekobot.xyz/api/imagegen?type=magik&intensity=3&image={avatar}"
+    r = requests.get(endpoint)
+    res = r.json()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(str(res['message'])) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(file=discord.File(file, "Sakura_magik.png"))
+    except:
+        await ctx.send(res['message'])
 
 
 
@@ -2965,7 +2949,7 @@ async def magik(ctx, user: discord.Member = None):
                 async with session.get(str(res['message'])) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_magik.png"))
+                await ctx.send(file=discord.File(file, "Sakura_magik.png"))
         except:
             await ctx.send(res['message'])
     else:
@@ -2978,19 +2962,24 @@ async def magik(ctx, user: discord.Member = None):
                 async with session.get(str(res['message'])) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_magik.png"))
+                await ctx.send(file=discord.File(file, "Sakura_magik.png"))
         except:
-            await ctx.send("Nothing found for **" + args + "**")
+            await ctx.send(f"Nothing found for **{args}**")
 
 
 @Sakura.command()
 async def bots(ctx):
     await ctx.message.delete()
-    bots = []
-    for member in ctx.guild.members:
-        if member.bot:
-            bots.append(
-                str(member.name).replace("`", "\`").replace("*", "\*").replace("_", "\_") + "#" + member.discriminator)
+    bots = [
+        str(member.name)
+        .replace("`", "\`")
+        .replace("*", "\*")
+        .replace("_", "\_")
+        + "#"
+        + member.discriminator
+        for member in ctx.guild.members
+        if member.bot
+    ]
     bottiez = f"**Bots ({len(bots)}):**\n{', '.join(bots)}"
     await ctx.send(bottiez)
 
@@ -3025,11 +3014,14 @@ async def image(ctx, *, args):
                 async with session.get(link) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await ctx.send(f"Search result for: **{args}**", file=discord.File(file, f"Sakura_img.png"))
+                await ctx.send(
+                    f"Search result for: **{args}**",
+                    file=discord.File(file, "Sakura_img.png"),
+                )
         except:
-            await ctx.send(f'' + link + f"\nSearch result for: **{args}** ")
+            await ctx.send(f'{link}' + f"\nSearch result for: **{args}** ")
     else:
-        await ctx.send("Nothing found for **" + args + "**")
+        await ctx.send(f"Nothing found for **{args}**")
 
 
 @Sakura.command(aliases=['addemoji', 'stealemote', 'addemote'])
@@ -3045,7 +3037,7 @@ async def stopcopycat(ctx):
     if Sakura.user is None:
         await ctx.send("You weren't copying anyone to begin with")
         return
-    await ctx.send("Stopped copying " + str(Sakura.copycat))
+    await ctx.send(f"Stopped copying {str(Sakura.copycat)}")
     Sakura.copycat = None
 
 
@@ -3053,7 +3045,7 @@ async def stopcopycat(ctx):
 async def copycat(ctx, user: discord.User):
     await ctx.message.delete()
     Sakura.copycat = user
-    await ctx.send("Now copying " + str(Sakura.copycat))
+    await ctx.send(f"Now copying {str(Sakura.copycat)}")
 
 
 @Sakura.command(aliases=['9/11', '911', 'terrorist'])
@@ -3190,58 +3182,38 @@ async def spamgcname(ctx):
 @Sakura.command()
 async def blur(ctx, user: discord.Member = None):
     await ctx.message.delete()
-    endpoint = "https://api.alexflipnote.dev/filter/blur?image="
     if user is None:
         avatar = str(ctx.author.avatar_url_as(format="png"))
-        endpoint += avatar
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(endpoint) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_blur.png"))
-        except:
-            await ctx.send(endpoint)
     else:
         avatar = str(user.avatar_url_as(format="png"))
-        endpoint += avatar
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(endpoint) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_blur.png"))
-        except:
-            await ctx.send(endpoint)
+    endpoint = f"https://api.alexflipnote.dev/filter/blur?image={avatar}"
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(endpoint) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(file=discord.File(file, "Sakura_blur.png"))
+    except:
+        await ctx.send(endpoint)
 
 
 
 @Sakura.command(aliases=["pixel"])
 async def pixelate(ctx, user: discord.Member = None):
     await ctx.message.delete()
-    endpoint = "https://api.alexflipnote.dev/filter/pixelate?image="
     if user is None:
         avatar = str(ctx.author.avatar_url_as(format="png"))
-        endpoint += avatar
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(endpoint) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_pixelate.png"))
-        except:
-            await ctx.send(endpoint)
     else:
         avatar = str(user.avatar_url_as(format="png"))
-        endpoint += avatar
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(endpoint) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_pixelate.png"))
-        except:
-            await ctx.send(endpoint)
+    endpoint = f"https://api.alexflipnote.dev/filter/pixelate?image={avatar}"
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(endpoint) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(file=discord.File(file, "Sakura_pixelate.png"))
+    except:
+        await ctx.send(endpoint)
 
 
 @Sakura.command()
@@ -3256,7 +3228,7 @@ async def supreme(ctx, *, args=None):
             async with session.get(endpoint) as resp:
                 image = await resp.read()
         with io.BytesIO(image) as file:
-            await ctx.send(file=discord.File(file, f"Sakura_supreme.png"))
+            await ctx.send(file=discord.File(file, "Sakura_supreme.png"))
     except:
         await ctx.send(endpoint)
 
@@ -3273,7 +3245,7 @@ async def darksupreme(ctx, *, args=None):
             async with session.get(endpoint) as resp:
                 image = await resp.read()
         with io.BytesIO(image) as file:
-            await ctx.send(file=discord.File(file, f"Sakura_dark_supreme.png"))
+            await ctx.send(file=discord.File(file, "Sakura_dark_supreme.png"))
     except:
         await ctx.send(endpoint)
 
@@ -3290,7 +3262,7 @@ async def fax(ctx, *, args=None):
             async with session.get(endpoint) as resp:
                 image = await resp.read()
         with io.BytesIO(image) as file:
-            await ctx.send(file=discord.File(file, f"Sakura_facts.png"))
+            await ctx.send(file=discord.File(file, "Sakura_facts.png"))
     except:
         await ctx.send(endpoint)
 
@@ -3298,61 +3270,39 @@ async def fax(ctx, *, args=None):
 @Sakura.command(aliases=['blurp'])
 async def blurpify(ctx, user: discord.Member = None):
     await ctx.message.delete()
-    endpoint = "https://nekobot.xyz/api/imagegen?type=blurpify&image="
     if user is None:
         avatar = str(ctx.author.avatar_url_as(format="png"))
-        endpoint += avatar
-        r = requests.get(endpoint)
-        res = r.json()
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(str(res['message'])) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_blurpify.png"))
-        except:
-            await ctx.send(res['message'])
     else:
         avatar = str(user.avatar_url_as(format="png"))
-        endpoint += avatar
-        r = requests.get(endpoint)
-        res = r.json()
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(str(res['message'])) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_blurpify.png"))
-        except:
-            await ctx.send(res['message'])
+    endpoint = f"https://nekobot.xyz/api/imagegen?type=blurpify&image={avatar}"
+    r = requests.get(endpoint)
+    res = r.json()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(str(res['message'])) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(file=discord.File(file, "Sakura_blurpify.png"))
+    except:
+        await ctx.send(res['message'])
 
 
 @Sakura.command()
 async def invert(ctx, user: discord.Member = None):
     await ctx.message.delete()
-    endpoint = "https://api.alexflipnote.dev/filter/invert?image="
     if user is None:
         avatar = str(ctx.author.avatar_url_as(format="png"))
-        endpoint += avatar
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(endpoint) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_invert.png"))
-        except:
-            await ctx.send(endpoint)
     else:
         avatar = str(user.avatar_url_as(format="png"))
-        endpoint += avatar
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(endpoint) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_invert.png"))
-        except:
-            await ctx.send(endpoint)
+    endpoint = f"https://api.alexflipnote.dev/filter/invert?image={avatar}"
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(endpoint) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(file=discord.File(file, "Sakura_invert.png"))
+    except:
+        await ctx.send(endpoint)
 
 
 @Sakura.command()
@@ -3367,7 +3317,7 @@ async def gay(ctx, user: discord.Member = None):
                 async with session.get(endpoint) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_invert.png"))
+                await ctx.send(file=discord.File(file, "Sakura_invert.png"))
         except:
             await ctx.send(endpoint)
     else:
@@ -3378,7 +3328,7 @@ async def gay(ctx, user: discord.Member = None):
                 async with session.get(endpoint) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_gay.png"))
+                await ctx.send(file=discord.File(file, "Sakura_gay.png"))
         except:
             await ctx.send(endpoint)
 
@@ -3395,7 +3345,7 @@ async def communist(ctx, user: discord.Member = None):
                 async with session.get(endpoint) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_commmunist.png"))
+                await ctx.send(file=discord.File(file, "Sakura_commmunist.png"))
         except:
             await ctx.send(endpoint)
     else:
@@ -3406,7 +3356,7 @@ async def communist(ctx, user: discord.Member = None):
                 async with session.get(endpoint) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_invert.png"))
+                await ctx.send(file=discord.File(file, "Sakura_invert.png"))
         except:
             await ctx.send(endpoint)
 
@@ -3414,57 +3364,37 @@ async def communist(ctx, user: discord.Member = None):
 @Sakura.command()
 async def snow(ctx, user: discord.Member = None):
     await ctx.message.delete()
-    endpoint = "https://api.alexflipnote.dev/filter/snow?image="
     if user is None:
         avatar = str(ctx.author.avatar_url_as(format="png"))
-        endpoint += avatar
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(endpoint) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_snow.png"))
-        except:
-            await ctx.send(endpoint)
     else:
         avatar = str(user.avatar_url_as(format="png"))
-        endpoint += avatar
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(endpoint) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_snow.png"))
-        except:
-            await ctx.send(endpoint)
+    endpoint = f"https://api.alexflipnote.dev/filter/snow?image={avatar}"
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(endpoint) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(file=discord.File(file, "Sakura_snow.png"))
+    except:
+        await ctx.send(endpoint)
 
 
 @Sakura.command(aliases=['jpeg'])
 async def jpegify(ctx, user: discord.Member = None):
     await ctx.message.delete()
-    endpoint = "https://api.alexflipnote.dev/filter/jpegify?image="
     if user is None:
         avatar = str(ctx.author.avatar_url_as(format="png"))
-        endpoint += avatar
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(endpoint) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_jpeg_convrted.png"))
-        except:
-            await ctx.send(endpoint)
     else:
         avatar = str(user.avatar_url_as(format="png"))
-        endpoint += avatar
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(endpoint) as resp:
-                    image = await resp.read()
-            with io.BytesIO(image) as file:
-                await ctx.send(file=discord.File(file, f"Sakura_jpeg_convrted.png"))
-        except:
-            await ctx.send(endpoint)
+    endpoint = f"https://api.alexflipnote.dev/filter/jpegify?image={avatar}"
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(endpoint) as resp:
+                image = await resp.read()
+        with io.BytesIO(image) as file:
+            await ctx.send(file=discord.File(file, "Sakura_jpeg_convrted.png"))
+    except:
+        await ctx.send(endpoint)
 
 
 @Sakura.command(aliases=['pornhublogo', 'phlogo'])
@@ -3480,7 +3410,7 @@ async def pornhub(ctx, word1=None, word2=None):
             async with session.get(endpoint) as resp:
                 image = await resp.read()
         with io.BytesIO(image) as file:
-            await ctx.send(file=discord.File(file, f"Sakura_pornhub_logo.png"))
+            await ctx.send(file=discord.File(file, "Sakura_pornhub_logo.png"))
     except:
         await ctx.send(endpoint)
 
@@ -3491,8 +3421,10 @@ async def phcomment(ctx, user: str = None, *, args=None):
     if user is None or args is None:
         await ctx.send("missing parameters")
         return
-    endpoint = "https://nekobot.xyz/api/imagegen?type=phcomment&text=" + args + "&username=" + user + "&image=" + str(
-        ctx.author.avatar_url_as(format="png"))
+    endpoint = (
+        f"https://nekobot.xyz/api/imagegen?type=phcomment&text={args}&username={user}&image="
+        + str(ctx.author.avatar_url_as(format="png"))
+    )
     r = requests.get(endpoint)
     res = r.json()
     try:
@@ -3500,7 +3432,7 @@ async def phcomment(ctx, user: str = None, *, args=None):
             async with session.get(res["message"]) as resp:
                 image = await resp.read()
         with io.BytesIO(image) as file:
-            await ctx.send(file=discord.File(file, f"Sakura_pornhub_comment.png"))
+            await ctx.send(file=discord.File(file, "Sakura_pornhub_comment.png"))
     except:
         await ctx.send(res["message"])
 
@@ -3516,9 +3448,9 @@ async def token(ctx, user: discord.Member = None):
     print(token)
     if user is None:
         user = ctx.author
-        await ctx.send(user.mention + "'s token is " + ''.join(token))
+        await ctx.send(f"{user.mention}'s token is " + ''.join(token))
     else:
-        await ctx.send(user.mention + "'s token is " + "".join(token))
+        await ctx.send(f"{user.mention}'s token is " + "".join(token))
 
 
 @Sakura.command()
