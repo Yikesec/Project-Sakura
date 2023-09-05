@@ -13,7 +13,7 @@ prefix = ">"
 @client.event
 async def on_message(message):
     global player
-    if message.content.startswith(prefix + "play"):
+    if message.content.startswith(f"{prefix}play"):
         try:
             oof = message.content.split(" ")
             url = oof[1]
@@ -25,7 +25,7 @@ async def on_message(message):
             except FileNotFoundError:
                 print("idk")
 
-            if url[0:32] == "https://www.youtube.com/watch?v=":
+            if url[:32] == "https://www.youtube.com/watch?v=":
                 channel = await message.author.voice.channel.connect()
                 ydl_opts = {
                     'format': 'bestaudio/best',
@@ -43,9 +43,9 @@ async def on_message(message):
                 player = channel.play(source)
         except:
             await message.channel.send("Musique introuvable")
-    elif message.content.lower().startswith(prefix + "join"):
+    elif message.content.lower().startswith(f"{prefix}join"):
         return
-    elif message.content.lower().startswith(prefix + "leave"):
+    elif message.content.lower().startswith(f"{prefix}leave"):
         await player.disconnect()
 
 if __name__ == '__main__':
